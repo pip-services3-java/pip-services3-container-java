@@ -3,9 +3,7 @@ package org.pipservices.container;
 import java.util.concurrent.*;
 
 import org.pipservices.commons.config.*;
-import org.pipservices.commons.errors.*;
 import org.pipservices.components.log.*;
-import org.pipservices.container.config.*;
 
 public class ProcessContainer extends Container {
 	
@@ -23,10 +21,8 @@ public class ProcessContainer extends Container {
             String arg = args[index];
             String nextArg = index < args.length - 1 ? args[index + 1] : null;
             nextArg = nextArg != null && nextArg.startsWith("-") ? null : nextArg;
-            if (nextArg != null) 
-            {
-                if (arg == "--config" || arg == "-c")
-                {
+            if (nextArg != null) {
+                if (arg == "--config" || arg == "-c") {
                     return nextArg;
                 }
             }
@@ -35,19 +31,15 @@ public class ProcessContainer extends Container {
     }
     
     
-    private ConfigParams getParameters(String[] args)
-    {
+    private ConfigParams getParameters(String[] args) {
         // Process command line parameters
         String line = "";
-        for (int index = 0; index < args.length; index++)
-        {
+        for (int index = 0; index < args.length; index++) {
             String arg = args[index];
             String nextArg = index < args.length - 1 ? args[index + 1] : null;
             nextArg = nextArg != null && nextArg.startsWith("-") ? null : nextArg;
-            if (nextArg != null)
-            {
-                if (arg == "--param" || arg == "--params" || arg == "-p")
-                {
+            if (nextArg != null) {
+                if (arg == "--param" || arg == "--params" || arg == "-p") {
                     if (line.length() > 0)
                         line = line + ';';
                     line = line + nextArg;
@@ -55,18 +47,17 @@ public class ProcessContainer extends Container {
                 }
             }
         }
+      
         ConfigParams parameters = ConfigParams.fromString(line);
 
-//         Process environmental variables
-        for (Object key : System.getProperties().keySet())
-        {
+    	// Process environmental variables
+        for (Object key : System.getProperties().keySet()) {
             String name = key.toString();
             String value = System.getProperty(name);
             parameters.put(name, value);
         }
         
-        for (Object key : System.getenv().keySet())
-        {
+        for (Object key : System.getenv().keySet()) {
             String name = key.toString();
             String value = System.getProperty(name);
             parameters.put(name, value);
@@ -75,12 +66,18 @@ public class ProcessContainer extends Container {
         return parameters;
     }
     
+    private boolean showHelp(String[] args) {
+        for (int index = 0; index < args.length; index++) {
+            String arg = args[index];
+            if ("--help".equals(arg) || "-h".equals(arg))
+                return true;
+        }
+        return false;
+    }
 
-    public void readConfigFromFile(String correlationId, String[] args, String defaultPath) 
-		throws ApplicationException {
-    	
-    	String path = args.length > 0 ? args[0] : defaultPath;
-    	readConfigFromFile(correlationId, path);
+    private void printHelp() {
+        System.out.println("Pip.Services process container - http://www.github.com/pip-services/pip-services");
+        System.out.println("run [-h] [-c <config file>] [-p <param>=<value>]*");
     }
     
     private void captureErrors(String correlationId) {
@@ -120,25 +117,21 @@ public class ProcessContainer extends Container {
         }        
     }
 
-    public void run(String correlationId) throws Exception {
+    public void run(String[] args) throws Exception {
+        if (showHelp(args)) {
+            printHelp();
+            return;
+        }
+
+        String correlationId = _info.getName();
+        String path = getConfigPath(args);
+        ConfigParams parameters = getParameters(args);
+        readConfigFromFile(correlationId, path, parameters);
+
         captureErrors(correlationId);
-    	start(correlationId);
+    	open(correlationId);
         captureExit(correlationId);
-        stop(correlationId);
+        close(correlationId);
     }
-
-    public void runWithConfig(String correlationId, ContainerConfig config) throws Exception {
-    	setConfig(config);
-    	run(correlationId);
-    }
-
-    public void runWithConfigFile(String correlationId, String path) throws Exception {
-    	readConfigFromFile(correlationId, path);
-    	run(correlationId);
-    }
-
-    public void runWithArgumentsOrConfigFile(String correlationId, String[] args, String defaultPath) throws Exception {
-    	readConfigFromFile(correlationId, args, defaultPath);
-    	run(correlationId);
-    }        
+    
 }

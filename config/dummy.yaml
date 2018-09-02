@@ -1,4 +1,4 @@
-- descriptor: "pip-services-commons:logger:console:*:*"
+- descriptor: "pip-services:logger:console:*:*"
   level: "trace"
 
 - descriptor: "pip-services-dummies:controller:*:*:*"
