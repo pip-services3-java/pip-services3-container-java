@@ -117,20 +117,12 @@ public class ProcessContainer extends Container {
         }        
     }
 
-<<<<<<< HEAD
     public void run(String correlationId) throws Exception {
         captureErrors(correlationId);
     	open(correlationId);
         captureExit(correlationId);
         close(correlationId);
     }
-=======
-    public void run(String[] args) throws Exception {
-        if (showHelp(args)) {
-            printHelp();
-            return;
-        }
->>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
 
         String correlationId = _info.getName();
         String path = getConfigPath(args);

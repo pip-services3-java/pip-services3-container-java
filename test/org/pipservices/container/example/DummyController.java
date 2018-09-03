@@ -22,7 +22,6 @@ public class DummyController implements  IReferenceable, IReconfigurable, IOpena
 	private void setCounter(long counter) { this.counter = counter; }
 	
 	public DummyController() {
-//		_timer = new Fix
         _timer = new FixedRateTimer(
             (String, Parameters) -> { notify(null, new Parameters()); }, 
             1000, 1000
