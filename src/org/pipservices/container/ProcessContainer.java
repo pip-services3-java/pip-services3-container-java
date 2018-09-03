@@ -122,9 +122,9 @@ public class ProcessContainer extends Container {
 
     public void run(String correlationId) throws Exception {
         captureErrors(correlationId);
-    	start(correlationId);
+    	open(correlationId);
         captureExit(correlationId);
-        stop(correlationId);
+        close(correlationId);
     }
 
     public void runWithConfig(String correlationId, ContainerConfig config) throws Exception {

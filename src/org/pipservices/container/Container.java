@@ -2,6 +2,8 @@ package org.pipservices.container;
 
 import java.util.*;
 
+import org.pipservices.commons.config.ConfigParams;
+import org.pipservices.commons.config.IConfigurable;
 import org.pipservices.commons.errors.*;
 import org.pipservices.components.info.*;
 import org.pipservices.components.log.*;
@@ -11,7 +13,7 @@ import org.pipservices.container.build.*;
 import org.pipservices.container.config.*;
 import org.pipservices.container.refer.*;
 
-public class Container {
+public class Container implements IConfigurable, IReferenceable, IUnreferenceable, IOpenable{
 	protected ILogger _logger = new NullLogger();
 	protected DefaultContainerFactory _factories = new DefaultContainerFactory();
     protected ContextInfo _info;
@@ -33,6 +35,13 @@ public class Container {
 
     public IReferences getReferences() { return _references; }
     
+
+	@Override
+	public void configure(ConfigParams config) throws ConfigException {
+		_config = ContainerConfig.fromConfig(config);
+		
+	}
+    
     public void readConfigFromFile(String correlationId, String path) throws ApplicationException {
     	_config = ContainerConfigReader.readFromFile(correlationId, path);
     }    
@@ -46,9 +55,15 @@ public class Container {
 
         references.put(DefaultContainerFactory.Descriptor, _factories);
     }
-    
-    public void start(String correlationId) throws Exception {
-    	if (_config == null)
+
+	@Override
+	public boolean isOpened() {
+		return _references != null;
+	}
+
+	@Override
+	public void open(String correlationId) throws ApplicationException {
+		if (_config == null)
     		throw new InvalidStateException(correlationId, "NO_CONFIG", "Container was not configured");
     	        
         try {
@@ -77,10 +92,12 @@ public class Container {
         	_logger.error(correlationId, ex, "Failed to start container");
         	throw ex;
         }
-    }
-
-    public void stop(String correlationId) throws Exception {
-    	if (_references == null)
+		
+	}
+	
+	@Override
+	public void close(String correlationId) throws ApplicationException {
+		if (_references == null)
     		throw new InvalidStateException(correlationId, "NO_STARTED", "Container was not started");
     	        
         try {
@@ -96,5 +113,18 @@ public class Container {
         	_logger.error(correlationId, ex, "Failed to stop container");
         	throw ex;
         }
-    }
+		
+	}
+
+	@Override
+	public void unsetReferences() {
+		// Override in child class
+		
+	}
+
+	@Override
+	public void setReferences(IReferences references) throws ReferenceException, ConfigException {
+		// Override in child class
+		
+	}
 }
