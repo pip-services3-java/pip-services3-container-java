@@ -1,9 +1,13 @@
 package org.pipservices.container;
 
+<<<<<<< HEAD
 import java.util.*;
 
 import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.config.IConfigurable;
+=======
+import org.pipservices.commons.config.*;
+>>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
 import org.pipservices.commons.errors.*;
 import org.pipservices.components.info.*;
 import org.pipservices.components.log.*;
@@ -13,14 +17,18 @@ import org.pipservices.container.build.*;
 import org.pipservices.container.config.*;
 import org.pipservices.container.refer.*;
 
+<<<<<<< HEAD
 public class Container implements IConfigurable, IReferenceable, IUnreferenceable, IOpenable{
+=======
+public class Container implements IConfigurable, IReferenceable, IUnreferenceable, IOpenable {
+>>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
 	protected ILogger _logger = new NullLogger();
 	protected DefaultContainerFactory _factories = new DefaultContainerFactory();
     protected ContextInfo _info;
     protected ContainerConfig _config;
     protected ContainerReferences _references;
     
-    public Container( String name, String description ) {
+    public Container(String name, String description) {
     	_info = new ContextInfo(name, description);
     }
 
@@ -28,8 +36,11 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
         _config = config;
     }
 
-	public ContextInfo getInfo() { return _info; }
+	public void configure(ConfigParams config) throws ConfigException {
+		_config = ContainerConfig.fromConfig(config);
+	}
 	
+<<<<<<< HEAD
 	public ContainerConfig getConfig() { return _config; }	
     public void setConfig(ContainerConfig value) { _config = value; }
 
@@ -44,8 +55,20 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
     
     public void readConfigFromFile(String correlationId, String path) throws ApplicationException {
     	_config = ContainerConfigReader.readFromFile(correlationId, path);
+=======
+    public void readConfigFromFile(String correlationId, String path, ConfigParams parameters) throws ApplicationException {
+    	_config = ContainerConfigReader.readFromFile(correlationId, path, parameters);
+>>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
     }    
         
+    public void setReferences(IReferences references) {
+    	// Override in child class
+    }
+    
+    public void unsetReferences() {
+    	// Override in child class
+    }
+    
     protected void initReferences(IReferences references) throws ApplicationException {
     	// Override in base classes			
 		ContextInfo existingInfo = (ContextInfo)references.getOneOptional(DefaultInfoFactory.ContextInfoDescriptor);
@@ -55,6 +78,7 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
 
         references.put(DefaultContainerFactory.Descriptor, _factories);
     }
+<<<<<<< HEAD
 
 	@Override
 	public boolean isOpened() {
@@ -65,6 +89,19 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
 	public void open(String correlationId) throws ApplicationException {
 		if (_config == null)
     		throw new InvalidStateException(correlationId, "NO_CONFIG", "Container was not configured");
+=======
+    
+    public boolean isOpen() {
+    	return _references != null;
+    }
+    
+    public void open(String correlationId) throws ApplicationException {
+    	if (_references != null)
+    		throw new InvalidStateException(correlationId, "ALREADY_OPENED", "Container was already opened");
+    	
+//    	if (_config == null)
+//    		throw new InvalidStateException(correlationId, "NO_CONFIG", "Container was not configured");
+>>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
     	        
         try {
             _logger.trace(correlationId, "Starting container.");
@@ -73,25 +110,24 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
             _references = new ContainerReferences();
             initReferences(_references);
             _references.putFromConfig(_config);
-                		
-    		// Reference and open components
-    		List<Object> components = _references.getAll();
-    		Referencer.setReferences(_references, components);
-        	Opener.open(correlationId, _references.getAll());
-
+            setReferences(_references);
+            
+            // Get reference to container info
+    		Descriptor infoDescriptor = new Descriptor("*", "context-info", "*", "*", "*");
+    		_info = (ContextInfo) _references.getOneRequired(infoDescriptor);
+            
+    		_references.open(correlationId);
+    		
     		// Get reference to logger
     		_logger = new CompositeLogger(_references);
-        	
-            // Get reference to container info
-    		Descriptor infoDescriptor = new Descriptor("*", "container-info", "*", "*", "*");
-    		_info = (ContextInfo) _references.getOneRequired(infoDescriptor);
-        	
+        	        	
             _logger.info(correlationId, "Container %s started.", _info.getName());
     	} catch (Exception ex) {
     		_references = null;
         	_logger.error(correlationId, ex, "Failed to start container");
         	throw ex;
         }
+<<<<<<< HEAD
 		
 	}
 	
@@ -99,14 +135,20 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
 	public void close(String correlationId) throws ApplicationException {
 		if (_references == null)
     		throw new InvalidStateException(correlationId, "NO_STARTED", "Container was not started");
+=======
+    }
+
+    public void close(String correlationId) throws ApplicationException {
+    	if (_references == null)
+    		return;
+>>>>>>> c8f44daa68a20c82a535ce00bbb91c44acdf335a
     	        
         try {
             _logger.trace(correlationId, "Stopping %s container", _info.getName());
 
             // Close and deference components
-    		List<Object> components = _references.getAll();
-            Closer.close(correlationId, components);
-    		Referencer.unsetReferences(components);
+            _references.close(correlationId);
+            _references = null;
 
             _logger.info(correlationId, "Container %s stopped", _info.getName());
     	} catch (Exception ex) {
