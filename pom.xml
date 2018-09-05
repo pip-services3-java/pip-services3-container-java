@@ -141,6 +141,13 @@
               </execution>
           </executions>
       </plugin>
+     <!--  <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+             <mainClass>test.org.pipservices.container.example.Program</mainClass>
+        </configuration>
+        </plugin>  -->
       </plugins>
   </build>
 

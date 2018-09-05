@@ -47,6 +47,26 @@ public class BuildReferencesDecorator extends ReferencesDecorator {
             return null;
         }
     }
+    
+    public Object clarifyLocator(Object locator, IFactory factory) {
+        if (factory == null) return locator;
+        if (!(locator instanceof Descriptor)) return locator;
+
+        Object anotherLocator = factory.canCreate(locator);
+        if (anotherLocator == null) return locator;
+        if (!(anotherLocator instanceof Descriptor)) return locator;
+
+        Descriptor descriptor = (Descriptor)locator;
+        Descriptor anotherDescriptor = (Descriptor)anotherLocator;
+
+        return new Descriptor(
+            descriptor.getGroup() != null ? descriptor.getGroup() : anotherDescriptor.getGroup(),
+            descriptor.getType() != null ? descriptor.getType() : anotherDescriptor.getType(),
+            descriptor.getKind() != null ? descriptor.getKind() : anotherDescriptor.getKind(),
+            descriptor.getName() != null ? descriptor.getName() : anotherDescriptor.getName(),
+            descriptor.getVersion() != null ? descriptor.getVersion() : anotherDescriptor.getVersion()
+        );
+    }
 
     @SuppressWarnings("unchecked")
 	@Override

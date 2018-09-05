@@ -28,10 +28,6 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
         _config = config;
     }
 
-	public void configure(ConfigParams config) throws ConfigException {
-		_config = ContainerConfig.fromConfig(config);
-	}
-	
 	public ContainerConfig getConfig() { return _config; }	
     public void setConfig(ContainerConfig value) { _config = value; }
 
@@ -44,18 +40,10 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
 		
 	}
     
-    public void readConfigFromFile(String correlationId, String path) throws ApplicationException {
-    	_config = ContainerConfigReader.readFromFile(correlationId, path);
+    public void readConfigFromFile(String correlationId, String path, ConfigParams parameters) throws ApplicationException {
+    	_config = ContainerConfigReader.readFromFile(correlationId, path, parameters);
     }    
-        
-    public void setReferences(IReferences references) {
-    	// Override in child class
-    }
-    
-    public void unsetReferences() {
-    	// Override in child class
-    }
-    
+           
     protected void initReferences(IReferences references) throws ApplicationException {
     	// Override in base classes			
 		ContextInfo existingInfo = (ContextInfo)references.getOneOptional(DefaultInfoFactory.ContextInfoDescriptor);
@@ -67,7 +55,7 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
     }
 
 	@Override
-	public boolean isOpened() {
+	public boolean isOpen() {
 		return _references != null;
 	}
 

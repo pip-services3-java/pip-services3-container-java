@@ -47,6 +47,12 @@ public class ContainerReferences extends ManagedReferences {
 				// Configure component
 				if (component instanceof IConfigurable) 
 					((IConfigurable)component).configure(componentConfig.getConfig());
+				
+				// Set references to factories
+                if (component instanceof IFactory)
+                {
+                	((IReferenceable)component).setReferences(this);
+                }
 			} catch (Exception ex) {
 				throw (ReferenceException) new ReferenceException(null, locator)
 					.withCause(ex);

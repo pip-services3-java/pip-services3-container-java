@@ -117,13 +117,13 @@ public class ProcessContainer extends Container {
         }        
     }
 
-    public void run(String correlationId) throws Exception {
-        captureErrors(correlationId);
-    	open(correlationId);
-        captureExit(correlationId);
-        close(correlationId);
-    }
-
+    public void run(String[] args) throws Exception {
+    	if (showHelp(args))
+        {
+            printHelp();
+            return;
+        }
+    	
         String correlationId = _info.getName();
         String path = getConfigPath(args);
         ConfigParams parameters = getParameters(args);

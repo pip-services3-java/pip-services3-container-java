@@ -53,13 +53,12 @@ public class DummyController implements  IReferenceable, IReconfigurable, IOpena
 	}
 
 	@Override
-	public boolean isOpened() {
-		return _timer.isStarted();
-	}
-
-	@Override
 	public void open(String correlationId) throws ApplicationException {
 		_timer.start();
         _logger.trace(correlationId, "Dummy controller opened");		
+	}
+	@Override
+	public boolean isOpen() {
+		return _timer.isStarted();
 	}
 }

@@ -7,7 +7,7 @@ public class Program {
         try
         {
         	DummyProcess process = new DummyProcess();
-            process.runWithArgumentsOrConfigFile(null, args, "");
+            process.run(args);
 
         }
         catch (Exception ex)

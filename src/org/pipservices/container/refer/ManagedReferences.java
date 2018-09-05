@@ -1,6 +1,5 @@
 package org.pipservices.container.refer;
 
-import java.util.*;
 
 import org.pipservices.commons.errors.*;
 import org.pipservices.commons.refer.*;
@@ -25,21 +24,18 @@ public class ManagedReferences extends ReferencesDecorator implements IOpenable,
         setBaseReferences(_runner);
     }
 
-    public boolean isOpened() {
-        List<Object> components = _references.getAll();
-        return Opener.isOpened(components);
+    public boolean isOpen() {
+    	return _linker.isOpen() && _runner.isOpen();
     }
     
     public void open(String correlationId) throws ApplicationException {
-        List<Object> components = _references.getAll();
-        Referencer.setReferences(this, components);
-        Opener.open(correlationId, components);
+    	_linker.open(correlationId);
+        _runner.open(correlationId);
     }
 
     public void close(String correlationId) throws ApplicationException {
-        List<Object> components = _references.getAll();
-        Closer.close(correlationId, components);
-        Referencer.unsetReferences(components);
+    	_linker.close(correlationId);
+        _runner.close(correlationId);
     }
 
 	public static ManagedReferences fromTuples(Object... tuples) throws ReferenceException {
