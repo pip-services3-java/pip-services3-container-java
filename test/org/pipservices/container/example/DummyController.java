@@ -11,16 +11,11 @@ import org.pipservices.commons.run.*;
 import org.pipservices.components.log.CompositeLogger;
 
 public class DummyController implements  IReferenceable, IReconfigurable, IOpenable, INotifiable{
-
 	private final FixedRateTimer _timer;
     private final CompositeLogger _logger = new CompositeLogger();
-    private String message = "Hello World!";
-	public String getMessage() { return message; }
-	private void setMessage(String message) { this.message = message; }
-    private long counter = 0;
-	public long getCounter() { return counter; }
-	private void setCounter(long counter) { this.counter = counter; }
-	
+    private String _message = "Hello World!";
+	private long _counter = 0;
+    	
 	public DummyController() {
         _timer = new FixedRateTimer(
             (String, Parameters) -> { notify(null, new Parameters()); }, 
@@ -30,14 +25,28 @@ public class DummyController implements  IReferenceable, IReconfigurable, IOpena
 	
 	@Override
 	public void configure(ConfigParams config) throws ConfigException {
-		message = config.getAsStringWithDefault("message", message);
-		
+		_message = config.getAsStringWithDefault("message", _message);		
 	}
 
 	@Override
 	public void setReferences(IReferences references) throws ReferenceException, ConfigException {
 		_logger.setReferences(references);
-		
+	}
+	
+	@Override
+	public void notify(String correlationId, Parameters args) throws ApplicationException {
+		 _logger.info(correlationId, "%s - %s", _counter++, _message);
+	}
+
+	@Override
+	public boolean isOpen() {
+		return _timer.isStarted();
+	}
+
+	@Override
+	public void open(String correlationId) throws ApplicationException {
+		_timer.start();
+        _logger.trace(correlationId, "Dummy controller opened");		
 	}
 	
 	@Override
@@ -46,19 +55,4 @@ public class DummyController implements  IReferenceable, IReconfigurable, IOpena
          _logger.trace(correlationId, "Dummy controller closed");		
 	}
 
-	@Override
-	public void notify(String correlationId, Parameters args) throws ApplicationException {
-		 _logger.info(correlationId, "{0} - {1}", counter++, message);
-		
-	}
-
-	@Override
-	public void open(String correlationId) throws ApplicationException {
-		_timer.start();
-        _logger.trace(correlationId, "Dummy controller opened");		
-	}
-	@Override
-	public boolean isOpen() {
-		return _timer.isStarted();
-	}
 }

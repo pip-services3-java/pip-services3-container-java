@@ -7,7 +7,9 @@ public class DummyProcess extends ProcessContainer{
 	public DummyProcess() {
 		super("dummy", "Sample dummy process");
 		
-		this._configPath = "./dummy.yml";
+		System.out.println("XXX = " + System.getProperty("user.dir"));
+		
+		this._configPath = "./config/dummy.yml";
         this._factories.add(new DummyFactory());
 	}
 

@@ -15,7 +15,7 @@ public class ContainerConfigReader {
         
         if (ext.equals("json"))
         	return readFromJsonFile(correlationId, path, parameters);
-        else if (ext.equals("yaml"))
+        else if (ext.equals("yaml") || ext.equals("yml"))
         	return readFromYamlFile(correlationId, path, parameters);
         
         // By default read as JSON
