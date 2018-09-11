@@ -5,6 +5,7 @@ import java.util.*;
 import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.config.IConfigurable;
 import org.pipservices.commons.errors.*;
+import org.pipservices.components.build.*;
 import org.pipservices.components.info.*;
 import org.pipservices.components.log.*;
 import org.pipservices.commons.refer.*;
@@ -53,6 +54,10 @@ public class Container implements IConfigurable, IReferenceable, IUnreferenceabl
 
         references.put(DefaultContainerFactory.Descriptor, _factories);
     }
+
+	public void addFactory(IFactory factory) {
+		_factories.add(factory);
+	}
 
 	@Override
 	public boolean isOpen() {
