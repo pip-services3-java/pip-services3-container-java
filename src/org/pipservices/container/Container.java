@@ -1,9 +1,6 @@
 package org.pipservices.container;
 
-import java.util.*;
-
-import org.pipservices.commons.config.ConfigParams;
-import org.pipservices.commons.config.IConfigurable;
+import org.pipservices.commons.config.*;
 import org.pipservices.commons.errors.*;
 import org.pipservices.components.build.*;
 import org.pipservices.components.info.*;
