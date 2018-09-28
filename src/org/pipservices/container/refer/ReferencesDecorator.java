@@ -78,7 +78,7 @@ public class ReferencesDecorator implements IReferences {
 	/**
 	 * Removes a previously added reference that matches specified locator. If many
 	 * references match the locator, it removes only the first one. When all
-	 * references shall be removed, use [[removeAll]] method instead.
+	 * references shall be removed, use removeAll() method instead.
 	 * 
 	 * @param locator a locator to remove reference
 	 * @return the removed component reference.
