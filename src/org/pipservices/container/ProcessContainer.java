@@ -28,7 +28,7 @@ import org.pipservices.components.log.*;
  */
 public class ProcessContainer extends Container {
 
-	protected String _configPath = "../config/config.yml";
+	protected String _configPath = "./config/config.yml";
 	private Semaphore _exitEvent = new Semaphore(0);
 
 	/**
