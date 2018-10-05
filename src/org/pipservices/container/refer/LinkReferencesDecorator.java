@@ -8,8 +8,8 @@ import org.pipservices.commons.run.IOpenable;
 
 /**
  * References decorator that automatically sets references to newly added components
- * that implement IReferenceable interface and unsets references from removed components
- * that implement IUnreferenceable interface.
+ * that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/IReferenceable.html">IReferenceable</a> interface and unsets references from removed components
+ * that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/IUnreferenceable.html">IUnreferenceable</a> interface.
  */
 public class LinkReferencesDecorator extends ReferencesDecorator implements IOpenable {
 	private boolean _opened = false;

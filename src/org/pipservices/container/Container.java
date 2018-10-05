@@ -21,7 +21,7 @@ import org.pipservices.container.refer.*;
  * On container start it performs the following actions:
  * <ul>
  * <li>Creates components using their types or calls registered factories to create components using their locators
- * <li>Configures components that implement {@link IConfigurable} interface and passes them their configuration parameters
+ * <li>Configures components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/config/IConfigurable.html">IConfigurable</a> interface and passes them their configuration parameters
  * <li>Sets references to components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/IReferenceable.html">IReferenceable</a> interface and passes them references of all components in the container
  * <li>Opens components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/run/IOpenable.html">IOpenable</a> interface
  * </ul>

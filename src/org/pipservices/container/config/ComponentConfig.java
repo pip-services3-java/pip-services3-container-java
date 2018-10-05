@@ -7,7 +7,7 @@ import org.pipservices.commons.reflect.*;
 
 /**
  * Configuration of a component inside a container.
- * 
+ * <p>
  * The configuration includes type information or descriptor,
  * and component configuration parameters.
  */

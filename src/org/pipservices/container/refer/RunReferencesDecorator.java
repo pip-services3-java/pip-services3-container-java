@@ -8,8 +8,8 @@ import org.pipservices.commons.run.*;
 
 /**
  * References decorator that automatically opens to newly added components
- * that implement IOpenable interface and closes removed components
- * that implement IClosable interface.
+ * that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/run/IOpenable.html">IOpenable</a> interface and closes removed components
+ * that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/run/IClosable.html">IClosable</a> interface.
  */
 public class RunReferencesDecorator extends ReferencesDecorator implements IOpenable {
 	private boolean _opened = false;

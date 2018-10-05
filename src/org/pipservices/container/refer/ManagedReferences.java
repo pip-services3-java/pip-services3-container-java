@@ -6,16 +6,18 @@ import org.pipservices.commons.run.*;
 
 /**
  * Managed references that in addition to keeping and locating references can also 
- * manage their lifecycle:
- * - Auto-creation of missing component using available factories
- * - Auto-linking newly added components
- * - Auto-opening newly added components
- * - Auto-closing removed components
+ * manage their lifecycle.
+ * <ul>
+ * <li>Auto-creation of missing component using available factories
+ * <li>Auto-linking newly added components
+ * <li>Auto-opening newly added components
+ * <li>Auto-closing removed components
+ * </ul>
  * 
  * @see RunReferencesDecorator
  * @see LinkReferencesDecorator
  * @see BuildReferencesDecorator
- * @see References
+ * @see <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/References.html">References</a>
  */
 public class ManagedReferences extends ReferencesDecorator implements IOpenable, IClosable {
 	protected References _references;
