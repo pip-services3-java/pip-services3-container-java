@@ -9,11 +9,13 @@ import org.pipservices.components.log.*;
  * Inversion of control (IoC) container that runs as a system process.
  * It processes command line arguments and handles unhandled exceptions and Ctrl-C signal
  * to gracefully shutdown the container.
- * 
+ * <p>
  * ### Command line arguments ###
- * - <code>--config / -c</code>             path to JSON or YAML file with container configuration (default: "./config/config.yml")
- * - <code>--param / --params / -p</code>   value(s) to parameterize the container configuration
- * - <code>--help / -h</code>               prints the container usage help
+ * <ul>
+ * <li><code>--config / -c</code>             path to JSON or YAML file with container configuration (default: "./config/config.yml")
+ * <li><code>--param / --params / -p</code>   value(s) to parameterize the container configuration
+ * <li><code>--help / -h</code>               prints the container usage help
+ * </ul>
  * <p>
  * ### Example ###
  * <pre>

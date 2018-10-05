@@ -13,34 +13,39 @@ import org.pipservices.container.refer.*;
 
 /**
  * Inversion of control (IoC) container that creates components and manages their lifecycle.
- * 
+ * <p>
  * The container is driven by configuration, that usually stored in JSON or YAML file.
  * The configuration contains a list of components identified by type or locator, followed
  * by component configuration.
- * 
+ * <p>
  * On container start it performs the following actions:
- * - Creates components using their types or calls registered factories to create components using their locators
- * - Configures components that implement IConfigurable interface and passes them their configuration parameters
- * - Sets references to components that implement IReferenceable interface and passes them references of all components in the container
- * - Opens components that implement IOpenable interface
- * 
+ * <ul>
+ * <li>Creates components using their types or calls registered factories to create components using their locators
+ * <li>Configures components that implement {@link IConfigurable} interface and passes them their configuration parameters
+ * <li>Sets references to components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/IReferenceable.html">IReferenceable</a> interface and passes them references of all components in the container
+ * <li>Opens components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/run/IOpenable.html">IOpenable</a> interface
+ * </ul>
+ * <p>
  * On container stop actions are performed in reversed order:
- * - Closes components that implement IClosable interface
- * - Unsets references in components that implement IUnreferenceable interface
- * - Destroys components in the container.
- * 
+ * <ul>
+ * <li>Closes components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/run/IClosable.html">IClosable</a> interface
+ * <li>Unsets references in components that implement <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-commons-java/master/doc/api/org/pipservices/commons/refer/IUnreferenceable.html">IUnreferenceable</a> interface
+ * <li>Destroys components in the container.
+ * </ul>
+ * <p>
  * The component configuration can be parameterized by dynamic values. That allows specialized containers
  * to inject parameters from command line or from environment variables.
- * 
- * The container automatically creates a ContextInfo component that carries detail information
+ * <p>
+ * The container automatically creates a <a href="https://raw.githubusercontent.com/pip-services-java/pip-services-components-java/master/doc/api/org/pipservices/components/info/ContextInfo.html">ContextInfo</a> component that carries detail information
  * about the container and makes it available for other components.
- * 
+ * <p>
  * ### Configuration parameters ###
- * 
- * name: 					the context (container or process) name
- * description: 		   	human-readable description of the context
- * properties: 			    entire section of additional descriptive properties
- * 	 ...
+ * <ul>
+ * <li>name: 					the context (container or process) name
+ * <li>description: 		   	human-readable description of the context
+ * <li>properties: 			    entire section of additional descriptive properties
+ * <li>...
+ * </ul>
  * <p>
  * ### Example ###
  * <pre>
