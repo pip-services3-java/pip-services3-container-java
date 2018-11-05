@@ -15,10 +15,10 @@ All functionality is decomposed into several packages:
 
 Quick Links:
 
-* [Downloads](https://github.com/pip-services-java/pip-services-container-java/blob/master/doc/Downloads.md)
-* [API Reference](http://htmlpreview.github.io/?https://github.com/pip-services-java/pip-services-container-java/blob/master/doc/api/index.html)
-* [Building and Testing](https://github.com/pip-services-java/pip-services-container-java/blob/master/doc/Development.md)
-* [Contributing](https://github.com/pip-services-java/pip-services-container-java/blob/master/doc/Development.md/#contrib)
+* [Downloads](https://github.com/pip-services3-java/pip-services3-container-java/blob/master/doc/Downloads.md)
+* [API Reference](http://htmlpreview.github.io/?https://github.com/pip-services3-java/pip-services3-container-java/blob/master/doc/api/index.html)
+* [Building and Testing](https://github.com/pip-services3-java/pip-services3-container-java/blob/master/doc/Development.md)
+* [Contributing](https://github.com/pip-services3-java/pip-services3-container-java/blob/master/doc/Development.md/#contrib)
 
 ## Acknowledgements
 
