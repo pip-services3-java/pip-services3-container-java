@@ -21,22 +21,22 @@ import org.pipservices3.container.refer.*;
  * On container start it performs the following actions:
  * <ul>
  * <li>Creates components using their types or calls registered factories to create components using their locators
- * <li>Configures components that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices/commons/config/IConfigurable.html">IConfigurable</a> interface and passes them their configuration parameters
- * <li>Sets references to components that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices/commons/refer/IReferenceable.html">IReferenceable</a> interface and passes them references of all components in the container
- * <li>Opens components that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices/commons/run/IOpenable.html">IOpenable</a> interface
+ * <li>Configures components that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices/commons/config/IConfigurable.html">IConfigurable</a> interface and passes them their configuration parameters
+ * <li>Sets references to components that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices/commons/refer/IReferenceable.html">IReferenceable</a> interface and passes them references of all components in the container
+ * <li>Opens components that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices/commons/run/IOpenable.html">IOpenable</a> interface
  * </ul>
  * <p>
  * On container stop actions are performed in reversed order:
  * <ul>
- * <li>Closes components that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices/commons/run/IClosable.html">IClosable</a> interface
- * <li>Unsets references in components that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices/commons/refer/IUnreferenceable.html">IUnreferenceable</a> interface
+ * <li>Closes components that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices/commons/run/IClosable.html">IClosable</a> interface
+ * <li>Unsets references in components that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices/commons/refer/IUnreferenceable.html">IUnreferenceable</a> interface
  * <li>Destroys components in the container.
  * </ul>
  * <p>
  * The component configuration can be parameterized by dynamic values. That allows specialized containers
  * to inject parameters from command line or from environment variables.
  * <p>
- * The container automatically creates a <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices/components/info/ContextInfo.html">ContextInfo</a> component that carries detail information
+ * The container automatically creates a <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices/components/info/ContextInfo.html">ContextInfo</a> component that carries detail information
  * about the container and makes it available for other components.
  * <p>
  * ### Configuration parameters ###

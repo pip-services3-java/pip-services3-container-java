@@ -8,8 +8,8 @@ import org.pipservices3.commons.run.*;
 
 /**
  * References decorator that automatically opens to newly added components
- * that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices3/commons/run/IOpenable.html">IOpenable</a> interface and closes removed components
- * that implement <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices3/commons/run/IClosable.html">IClosable</a> interface.
+ * that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices3/commons/run/IOpenable.html">IOpenable</a> interface and closes removed components
+ * that implement <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices3/commons/run/IClosable.html">IClosable</a> interface.
  */
 public class RunReferencesDecorator extends ReferencesDecorator implements IOpenable {
 	private boolean _opened = false;

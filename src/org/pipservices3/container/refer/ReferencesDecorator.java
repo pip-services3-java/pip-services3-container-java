@@ -6,10 +6,10 @@ import org.pipservices3.commons.errors.*;
 import org.pipservices3.commons.refer.*;
 
 /**
- * Chainable decorator for <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices3/commons/refer/IReferences.html">IReferences</a> that allows to inject additional capabilities
+ * Chainable decorator for <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices3/commons/refer/IReferences.html">IReferences</a> that allows to inject additional capabilities
  * such as automatic component creation, automatic registration and opening.
  * 
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices3/commons/refer/IReferences.html">IReferences</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices3/commons/refer/IReferences.html">IReferences</a>
  */
 public class ReferencesDecorator implements IReferences {
 	/**

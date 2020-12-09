@@ -17,7 +17,7 @@ import org.pipservices3.commons.run.*;
  * @see RunReferencesDecorator
  * @see LinkReferencesDecorator
  * @see BuildReferencesDecorator
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-commons-java/master/doc/api/org/pipservices3/commons/refer/References.html">References</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-commons-java/org/pipservices3/commons/refer/References.html">References</a>
  */
 public class ManagedReferences extends ReferencesDecorator implements IOpenable, IClosable {
 	protected References _references;

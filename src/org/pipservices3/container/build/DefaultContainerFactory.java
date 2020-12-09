@@ -13,14 +13,14 @@ import org.pipservices3.commons.refer.*;
 /**
  * Creates default container components (loggers, counters, caches, locks, etc.) by their descriptors.
  * 
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/build/Factory.html">Factory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/info/DefaultInfoFactory.html">DefaultInfoFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/log/DefaultLoggerFactory.html">DefaultLoggerFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/count/DefaultCountersFactory.html">DefaultCountersFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/config/DefaultConfigReaderFactory.html">DefaultConfigReaderFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/cache/DefaultCacheFactory.html">DefaultCacheFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/auth/DefaultCredentialStoreFactory.html">DefaultCredentialStoreFactory</a>
- * @see <a href="https://raw.githubusercontent.com/pip-services3-java/pip-services3-components-java/master/doc/api/org/pipservices3/components/connect/DefaultDiscoveryFactory.html">DefaultDiscoveryFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/build/Factory.html">Factory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/info/DefaultInfoFactory.html">DefaultInfoFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/log/DefaultLoggerFactory.html">DefaultLoggerFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/count/DefaultCountersFactory.html">DefaultCountersFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/config/DefaultConfigReaderFactory.html">DefaultConfigReaderFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/cache/DefaultCacheFactory.html">DefaultCacheFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/auth/DefaultCredentialStoreFactory.html">DefaultCredentialStoreFactory</a>
+ * @see <a href="https://pip-services3-java.github.io/pip-services3-components-java/org/pipservices3/components/connect/DefaultDiscoveryFactory.html">DefaultDiscoveryFactory</a>
  */
 public class DefaultContainerFactory extends CompositeFactory {
 	public final static Descriptor Descriptor = new Descriptor("pip-services3", "factory", "container", "default",
