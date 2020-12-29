@@ -49,6 +49,10 @@ if (!(Test-Path "~/.m2/settings.xml")) {
 </settings>
 "@
 
+    if (!(Test-Path "~/.m2")) {
+        New-Item -Path "~/.m2" -ItemType "directory"
+    }
+
     Set-Content -Path "~/.m2/settings.xml" -Value $m2SetingsContent
 }
 
