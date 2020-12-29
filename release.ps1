@@ -6,19 +6,56 @@ $ErrorActionPreference = "Stop"
 $component = Get-Content -Path "component.json" | ConvertFrom-Json
 $version = ([xml](Get-Content -Path "pom.xml")).project.version
 
+# Verify versions in component.json and pom.xml
 if ($component.version -ne $version) {
     throw "Versions in component.json and pom.xml do not match"
 }
 
-# Make sure that:
-# 1. GPG has been installed, key was generated and uploaded to a key server;
-# 2. Maven has been installed (use v3.3.9 instead of v3.5.4 - otherwise upload will be VERY slow [https://issues.sonatype.org/browse/OSSRH-43371]);
-# 3. Maven's global settings file (~/.m2/settings.xml) contains all necessary credentials and your key
-# 4. ~/.gnupg contains 2 files, each of which contain the lines in double quotation marks:
-#   4a. ~/.gnupg/gpg-agent.conf
-#   "allow-loopback-pinentry"
-#   4b. ~/.gnupg/gpg.conf
-#   "pinentry-mode loopback"
-# 
-# See "Development.md" in the "doc" folder for detailed instructions.
+# Create ~/.m2/settings.xml if not exists
+if (!(Test-Path "~/.m2/settings.xml")) {
+    $m2SetingsContent = @"
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+   <servers>
+      <server>
+         <id>ossrh</id>
+         <username>$($env:M2_USER)</username>
+         <password>$($env:M2_PASS)</password>
+      </server>
+      <server>
+         <id>sonatype-nexus-snapshots</id>
+         <username>$($env:M2_USER)</username>
+         <password>$($env:M2_PASS)</password>
+      </server>
+      <server>
+         <id>nexus-releases</id>
+         <username>$($env:M2_USER)</username>
+         <password>$($env:M2_PASS)</password>
+      </server>
+   </servers>
+   <profiles>
+      <profile>
+         <id>ossrh</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+            <gpg.keyname>$($env:GPG_KEYNAME)</gpg.keyname>
+            <gpg.executable>gpg</gpg.executable>
+            <gpg.passphrase>$($env:GPG_PASSPHRASE)</gpg.passphrase>
+         </properties>
+      </profile>
+   </profiles>
+</settings>
+"@
+
+    Set-Content -Path "~/.m2/settings.xml" -Value $pypircContent
+}
+
+# Release package
 mvn clean deploy
+
+# Verify release result
+if ($LastExitCode -ne 0) {
+    Write-Error "Release failed. Watch logs above."
+}
