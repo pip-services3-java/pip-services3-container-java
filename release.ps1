@@ -49,7 +49,7 @@ if (!(Test-Path "~/.m2/settings.xml")) {
 </settings>
 "@
 
-    Set-Content -Path "~/.m2/settings.xml" -Value $pypircContent
+    Set-Content -Path "~/.m2/settings.xml" -Value $m2SetingsContent
 }
 
 # Release package

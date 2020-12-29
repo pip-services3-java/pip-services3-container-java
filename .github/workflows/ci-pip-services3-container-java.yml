@@ -50,8 +50,10 @@ jobs:
     - name: Release binary artifacts
       uses: pip-devops/actions/java/release@v1
       with:
-        pypi-user: ${{ secrets.PYPI_USER }}
-        pypi-pass: ${{ secrets.PYPI_PASS }}
+        m2-user: ${{ secrets.M2_USER }}
+        m2-pass: ${{ secrets.M2_PASS }}
+        gpg-keyname: ${{ secrets.GPG_KEYNAME }}
+        gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
     ############# Clear #############
 
