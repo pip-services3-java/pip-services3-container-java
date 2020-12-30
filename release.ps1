@@ -13,6 +13,25 @@ if ($component.version -ne $version) {
 
 # Create ~/.m2/settings.xml if not exists
 if (!(Test-Path "~/.m2/settings.xml")) {
+   # Generate new gpg key
+   $genKey = @"
+Key-Type: 1
+Key-Length: 2048
+Subkey-Type: 1
+Subkey-Length: 2048
+Name-Real: $($env:GPG_USERNAME)
+Name-Email: $($env:GPG_EMAIL)
+Passphrase: $($env:GPG_PASSPHRASE)
+Expire-Date: 0
+"@
+
+   Set-Content -Path "genKey" -Value $genKey
+   
+   $gpgOut = gpg --batch --gen-key genKey
+
+   # Get gpg keyname
+   $gpgKeyname = Read-Host "Enter gpg key id, you should see it above (gpg: key YOUR_KEY_ID marked as ultimately trusted)"
+
     $m2SetingsContent = @"
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
@@ -40,7 +59,7 @@ if (!(Test-Path "~/.m2/settings.xml")) {
             <activeByDefault>true</activeByDefault>
          </activation>
          <properties>
-            <gpg.keyname>$($env:GPG_KEYNAME)</gpg.keyname>
+            <gpg.keyname>$gpgKeyname</gpg.keyname>
             <gpg.executable>gpg</gpg.executable>
             <gpg.passphrase>$($env:GPG_PASSPHRASE)</gpg.passphrase>
          </properties>
@@ -50,7 +69,7 @@ if (!(Test-Path "~/.m2/settings.xml")) {
 "@
 
     if (!(Test-Path "~/.m2")) {
-        New-Item -Path "~/.m2" -ItemType "directory"
+        $null = New-Item -Path "~/.m2" -ItemType "directory"
     }
 
     Set-Content -Path "~/.m2/settings.xml" -Value $m2SetingsContent
@@ -61,5 +80,5 @@ mvn clean deploy
 
 # Verify release result
 if ($LastExitCode -ne 0) {
-    Write-Error "Release failed. Watch logs above."
+    Write-Error "Release failed. Watch logs above. If you run script from local machine - try to remove ~/.m2/settings.xml and rerun a script."
 }
