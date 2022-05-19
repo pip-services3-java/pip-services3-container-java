@@ -33,11 +33,11 @@ public class LinkReferencesDecorator extends ReferencesDecorator implements IOpe
 	/**
 	 * Creates a new instance of the decorator.
 	 * 
-	 * @param baseReferences   the next references or decorator in the chain.
-	 * @param parentReferences the decorator at the top of the chain.
+	 * @param nextReferences   the next references or decorator in the chain.
+	 * @param topReferences the decorator at the top of the chain.
 	 */
-	public LinkReferencesDecorator(IReferences baseReferences, IReferences parentReferences) {
-		super(baseReferences, parentReferences);
+	public LinkReferencesDecorator(IReferences nextReferences, IReferences topReferences) {
+		super(nextReferences, topReferences);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class LinkReferencesDecorator extends ReferencesDecorator implements IOpe
 		if (!_opened) {
 			_opened = true;
 			List<Object> components = super.getAll();
-			Referencer.setReferences(getParentReferences(), components);
+			Referencer.setReferences(getTopReferences(), components);
 		}
 	}
 
@@ -94,7 +94,7 @@ public class LinkReferencesDecorator extends ReferencesDecorator implements IOpe
 		super.put(locator, component);
 
 		if (_opened)
-			Referencer.setReferencesForOne(getParentReferences(), component);
+			Referencer.setReferencesForOne(getTopReferences(), component);
 	}
 
 	/**

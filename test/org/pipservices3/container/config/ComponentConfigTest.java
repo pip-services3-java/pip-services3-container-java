@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 import org.pipservices3.commons.config.ConfigParams;
+import org.pipservices3.commons.errors.ApplicationException;
 import org.pipservices3.commons.errors.ConfigException;
 import org.pipservices3.commons.refer.Descriptor;
 import org.pipservices3.commons.reflect.TypeDescriptor;
@@ -40,6 +41,17 @@ public class ComponentConfigTest {
 			);
 		componentConfig.setConfig(config);
 		assertEquals(componentConfig.getConfig(), config);
+	}
+
+	@Test
+	public void testFromEmptyConfig() throws ConfigException {
+		ConfigParams config = ConfigParams.fromTuples();
+
+		try {
+			ComponentConfig componentConfig = ComponentConfig.fromConfig(config);
+		} catch (ApplicationException ex) {
+			assertEquals(ex.getMessage(), "Component configuration must have descriptor or type");
+		}
 	}
 	
 	@Test

@@ -13,7 +13,7 @@ public class ManagedReferencesTest {
     	ManagedReferences refs = new ManagedReferences();
 
     	DefaultLoggerFactory factory = new DefaultLoggerFactory();
-        refs.put(DefaultLoggerFactory.Descriptor, factory);
+        refs.put(null, factory);
 
         ILogger logger = refs.getOneRequired(ILogger.class, new Descriptor("*", "logger", "*", "*", "*"));
         assertNotNull(logger);

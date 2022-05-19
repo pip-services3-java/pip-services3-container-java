@@ -54,18 +54,18 @@ import org.pipservices3.container.refer.*;
  * - descriptor: mygroup:mycomponent1:default:default:1.0
  *   param1: 123
  *   param2: ABC
- * 
+ *
  * - type: mycomponent2,mypackage
  *   param1: 321
  *   param2: XYZ
  * ============================
- * 
+ *
  * Container container = new Container();
  * container.addFactory(new MyComponentFactory());
- * 
+ *
  * ConfigParams parameters = ConfigParams.fromValue(process.env);
  * container.readConfigFromFile("123", "./config/config.yml", parameters);
- * 
+ *
  * container.open("123");
  * System.out.println("Container is opened");
  * ...
@@ -73,193 +73,200 @@ import org.pipservices3.container.refer.*;
  * System.out.println("Container is closed");
  * }
  * </pre>
+ *
  * @see IConfigurable
  * @see IReferenceable
  * @see IOpenable
  */
 public class Container implements IConfigurable, IReferenceable, IUnreferenceable, IOpenable {
-	protected ILogger _logger = new NullLogger();
-	protected DefaultContainerFactory _factories = new DefaultContainerFactory();
-	protected ContextInfo _info;
-	protected ContainerConfig _config;
-	protected ContainerReferences _references;
+    protected ILogger _logger = new NullLogger();
+    protected DefaultContainerFactory _factories = new DefaultContainerFactory();
+    protected ContextInfo _info;
+    protected ContainerConfig _config;
+    protected ContainerReferences _references;
 
-	/**
-	 * Creates a new instance of the container.
-	 * 
-	 * @param name        (optional) a container name (accessible via ContextInfo)
-	 * @param description (optional) a container description (accessible via
-	 *                    ContextInfo)
-	 */
-	public Container(String name, String description) {
-		_info = new ContextInfo(name, description);
-	}
+    /**
+     * Creates a new instance of the container.
+     *
+     * @param name        (optional) a container name (accessible via ContextInfo)
+     * @param description (optional) a container description (accessible via
+     *                    ContextInfo)
+     */
+    public Container(String name, String description) {
+        _info = new ContextInfo(name, description);
+    }
 
-	/**
-	 * Creates a new instance of the container.
-	 * 
-	 * @param config container configuration
-	 */
-	public Container(ContainerConfig config) {
-		_config = config;
-	}
+    /**
+     * Creates a new instance of the container.
+     *
+     * @param config container configuration
+     */
+    public Container(ContainerConfig config) {
+        _config = config;
+    }
 
-	public ContainerConfig getConfig() {
-		return _config;
-	}
+    public ContainerConfig getConfig() {
+        return _config;
+    }
 
-	public void setConfig(ContainerConfig value) {
-		_config = value;
-	}
+    public void setConfig(ContainerConfig value) {
+        _config = value;
+    }
 
-	public IReferences getReferences() {
-		return _references;
-	}
+    public IReferences getReferences() {
+        return _references;
+    }
 
-	/**
-	 * Configures component by passing configuration parameters.
-	 * 
-	 * @param config configuration parameters to be set.
-	 * @throws ConfigException when configuration is wrong.
-	 */
-	@Override
-	public void configure(ConfigParams config) throws ConfigException {
-		_config = ContainerConfig.fromConfig(config);
+    /**
+     * Configures component by passing configuration parameters.
+     *
+     * @param config configuration parameters to be set.
+     * @throws ConfigException when configuration is wrong.
+     */
+    @Override
+    public void configure(ConfigParams config) throws ConfigException {
+        _config = ContainerConfig.fromConfig(config);
 
-	}
+    }
 
-	/**
-	 * Reads container configuration from JSON or YAML file and parameterizes it
-	 * with given values.
-	 * 
-	 * @param correlationId (optional) transaction id to trace execution through
-	 *                      call chain.
-	 * @param path          a path to configuration file
-	 * @param parameters    values to parameters the configuration or null to skip
-	 *                      parameterization.
-	 * @throws ApplicationException when error occured.
-	 */
-	public void readConfigFromFile(String correlationId, String path, ConfigParams parameters)
-			throws ApplicationException {
-		_config = ContainerConfigReader.readFromFile(correlationId, path, parameters);
-	}
+    /**
+     * Reads container configuration from JSON or YAML file and parameterizes it
+     * with given values.
+     *
+     * @param correlationId (optional) transaction id to trace execution through
+     *                      call chain.
+     * @param path          a path to configuration file
+     * @param parameters    values to parameters the configuration or null to skip
+     *                      parameterization.
+     * @throws ApplicationException when error occured.
+     */
+    public void readConfigFromFile(String correlationId, String path, ConfigParams parameters)
+            throws ApplicationException {
+        _config = ContainerConfigReader.readFromFile(correlationId, path, parameters);
+        _logger.trace(correlationId, this._config.toString());
+    }
 
-	/**
-	 * Sets references to dependent components.
-	 * 
-	 * @param references references to locate the component dependencies.
-	 * @throws ReferenceException when no found references.
-	 * @throws ConfigException    when configuration is wrong
-	 */
-	@Override
-	public void setReferences(IReferences references) throws ReferenceException, ConfigException {
-		// Override in child class
+    /**
+     * Sets references to dependent components.
+     *
+     * @param references references to locate the component dependencies.
+     * @throws ReferenceException when no found references.
+     * @throws ConfigException    when configuration is wrong
+     */
+    @Override
+    public void setReferences(IReferences references) throws ReferenceException, ConfigException {
+        // Override in child class
 
-	}
+    }
 
-	/**
-	 * Unsets (clears) previously set references to dependent components.
-	 */
-	@Override
-	public void unsetReferences() {
-		// Override in child class
+    /**
+     * Unsets (clears) previously set references to dependent components.
+     */
+    @Override
+    public void unsetReferences() {
+        // Override in child class
 
-	}
+    }
 
-	private void initReferences(IReferences references) throws ApplicationException {
-		// Override in base classes
-		ContextInfo existingInfo = (ContextInfo) references.getOneOptional(DefaultInfoFactory.ContextInfoDescriptor);
-		if (existingInfo == null)
-			references.put(DefaultInfoFactory.ContextInfoDescriptor, _info);
-		else
-			_info = existingInfo;
+    private void initReferences(IReferences references) throws ApplicationException {
+        // Override in base classes
+        ContextInfo existingInfo = references.getOneOptional(ContextInfo.class, new Descriptor("*", "context-info", "*", "*", "1.0"));
+        if (existingInfo == null)
+            references.put(new Descriptor("pip-services", "context-info", "default", "default", "1.0"), this._info);
+        else
+            this._info = existingInfo;
 
-		references.put(DefaultContainerFactory.Descriptor, _factories);
-	}
+        references.put(new Descriptor("pip-services", "factory", "container", "default", "1.0"), this._factories);
+    }
 
-	/**
-	 * Adds a factory to the container. The factory is used to create components
-	 * added to the container by their locators (descriptors).
-	 * 
-	 * @param factory a component factory to be added.
-	 */
-	public void addFactory(IFactory factory) {
-		_factories.add(factory);
-	}
+    /**
+     * Adds a factory to the container. The factory is used to create components
+     * added to the container by their locators (descriptors).
+     *
+     * @param factory a component factory to be added.
+     */
+    public void addFactory(IFactory factory) {
+        _factories.add(factory);
+    }
 
-	/**
-	 * Checks if the component is opened.
-	 * 
-	 * @return true if the component has been opened and false otherwise.
-	 */
-	@Override
-	public boolean isOpen() {
-		return _references != null;
-	}
+    /**
+     * Checks if the component is opened.
+     *
+     * @return true if the component has been opened and false otherwise.
+     */
+    @Override
+    public boolean isOpen() {
+        return _references != null;
+    }
 
-	/**
-	 * Opens the component.
-	 * 
-	 * @param correlationId (optional) transaction id to trace execution through
-	 *                      call chain.
-	 * @throws ApplicationException when error occured.
-	 */
-	@Override
-	public void open(String correlationId) throws ApplicationException {
-		if (_config == null)
-			throw new InvalidStateException(correlationId, "NO_CONFIG", "Container was not configured");
+    /**
+     * Opens the component.
+     *
+     * @param correlationId (optional) transaction id to trace execution through
+     *                      call chain.
+     * @throws ApplicationException when error occured.
+     */
+    @Override
+    public void open(String correlationId) throws ApplicationException {
+        if (this._references != null)
+            throw new InvalidStateException(
+                    correlationId,
+                    "ALREADY_OPENED",
+                    "Container was already opened"
+            );
 
-		try {
-			_logger.trace(correlationId, "Starting container.");
 
-			// Create references with configured components
-			_references = new ContainerReferences();
-			initReferences(_references);
-			_references.putFromConfig(_config);
-			setReferences(_references);
+        try {
+            _logger.trace(correlationId, "Starting container.");
 
-			// Get reference to container info
-			Descriptor infoDescriptor = new Descriptor("*", "context-info", "*", "*", "*");
-			_info = (ContextInfo) _references.getOneRequired(infoDescriptor);
+            // Create references with configured components
+            _references = new ContainerReferences();
+            initReferences(_references);
+            _references.putFromConfig(_config);
+            setReferences(_references);
 
-			_references.open(correlationId);
+            // Get reference to container info
+            Descriptor infoDescriptor = new Descriptor("*", "context-info", "*", "*", "*");
+            _info = (ContextInfo) _references.getOneRequired(infoDescriptor);
 
-			// Get reference to logger
-			_logger = new CompositeLogger(_references);
+            _references.open(correlationId);
 
-			_logger.info(correlationId, "Container %s started.", _info.getName());
-		} catch (Exception ex) {
-			_references = null;
-			_logger.error(correlationId, ex, "Failed to start container");
-			throw ex;
-		}
+            // Get reference to logger
+            _logger = new CompositeLogger(_references);
 
-	}
+            _logger.info(correlationId, "Container %s started.", _info.getName());
+        } catch (Exception ex) {
+            _references = null;
+            _logger.error(correlationId, ex, "Failed to start container");
+            throw ex;
+        }
 
-	/**
-	 * Closes component and frees used resources.
-	 * 
-	 * @param correlationId (optional) transaction id to trace execution through
-	 *                      call chain.
-	 * @throws ApplicationException when error occured.
-	 */
-	@Override
-	public void close(String correlationId) throws ApplicationException {
-		if (_references == null)
-			throw new InvalidStateException(correlationId, "NO_STARTED", "Container was not started");
+    }
 
-		try {
-			_logger.trace(correlationId, "Stopping %s container", _info.getName());
+    /**
+     * Closes component and frees used resources.
+     *
+     * @param correlationId (optional) transaction id to trace execution through
+     *                      call chain.
+     * @throws ApplicationException when error occured.
+     */
+    @Override
+    public void close(String correlationId) throws ApplicationException {
+        if (_references == null)
+            throw new InvalidStateException(correlationId, "NO_STARTED", "Container was not started");
 
-			// Close and deference components
-			_references.close(correlationId);
-			_references = null;
+        try {
+            _logger.trace(correlationId, "Stopping %s container", _info.getName());
 
-			_logger.info(correlationId, "Container %s stopped", _info.getName());
-		} catch (Exception ex) {
-			_logger.error(correlationId, ex, "Failed to stop container");
-			throw ex;
-		}
+            // Close and deference components
+            _references.close(correlationId);
+            _references = null;
 
-	}
+            _logger.info(correlationId, "Container %s stopped", _info.getName());
+        } catch (Exception ex) {
+            _logger.error(correlationId, ex, "Failed to stop container");
+            throw ex;
+        }
+
+    }
 }

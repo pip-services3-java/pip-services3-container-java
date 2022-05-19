@@ -44,7 +44,7 @@ public class ManagedReferences extends ReferencesDecorator implements IOpenable,
 		_linker = new LinkReferencesDecorator(_builder, this);
 		_runner = new RunReferencesDecorator(_linker, this);
 
-		setBaseReferences(_runner);
+		setNextReferences(_runner);
 	}
 
 	/**
