@@ -18,7 +18,7 @@ The module contains the following packages:
 
 <a name="links"></a> Quick links:
 
-* [Configuration Pattern](https://www.pipservices.org/recipies/configuration) 
+* [Configuration Pattern](http://docs.pipservices.org/toolkit/recipes/configuration/) 
 * [API Reference](https://pip-services3-java.github.io/pip-services3-container-java/)
 * [Change Log](CHANGELOG.md)
 * [Get Help](http://docs.pipservices.org/get_help/)
