@@ -44,7 +44,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
-        <manchu.version>3.0.0</manchu.version>
+        <minimal.pipversion>3.0.1</minimal.pipversion>
     </properties>
 
     <build>
@@ -111,6 +111,9 @@
                 <configuration>
                     <reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
                     <destDir>.</destDir>
+                    <additionalOptions>
+                        <additionalOption>-Xdoclint:none</additionalOption>
+                    </additionalOptions>
                     <!--
                                   <quiet>true</quiet>
                                   <nonavbar>true</nonavbar>
@@ -193,7 +196,7 @@
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <version>9</version>
     </parent>
 
 
@@ -207,7 +210,7 @@
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -215,12 +218,12 @@
         <dependency>
             <groupId>org.pipservices</groupId>
             <artifactId>pip-services3-commons</artifactId>
-            <version>[${manchu.version},4.0.0-!)</version>
+            <version>[${minimal.pipversion},4.0.0-!)</version>
         </dependency>
         <dependency>
             <groupId>org.pipservices</groupId>
             <artifactId>pip-services3-components</artifactId>
-            <version>[${manchu.version},4.0.0-!)</version>
+            <version>[${minimal.pipversion},4.0.0-!)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

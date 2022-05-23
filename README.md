@@ -127,7 +127,7 @@ mvn compile exec:java -Dexec.mainClass="org.example.Program"
 ```
 ## Develop
 
-For development you shall install the following prerequisites:
+For development, you shall install the following prerequisites:
 * Java SE Development Kit 11+
 * Eclipse Java Photon or another IDE of your choice
 * Docker
