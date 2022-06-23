@@ -89,7 +89,7 @@ public class ProcessContainer extends Container {
 
         for (Object key : System.getenv().keySet()) {
             String name = key.toString();
-            String value = System.getProperty(name);
+            String value = System.getenv(name);
             parameters.put(name, value);
         }
 
