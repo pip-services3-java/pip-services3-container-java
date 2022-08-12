@@ -1,6 +1,6 @@
 {
     "name": "pip-services3-container",
-    "type": "microservice",
+    "type": "module",
     "language": "java",
     "version": "3.1.2",
     "build": 0,
